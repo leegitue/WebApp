@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Choose a Birthdate</title>
+  <link rel="stylesheet" href="birthday.css">
+</head>
+<body>
+  <div class="birthday-container">
+    <h2>Choose a Birthdate</h2>
+    <form action="submit_birthday.php" method="POST" enctype="multipart/form-data">
+      
+      <label for="year">Year:</label>
+      <select name="year" id="year"></select>
+
+      <label for="month">Month:</label>
+      <select name="month" id="month">
+        <option value="0">January</option>
+        <option value="1">February</option>
+        <option value="2">March</option>
+        <option value="3">April</option>
+        <option value="4">May</option>
+        <option value="5">June</option>
+        <option value="6">July</option>
+        <option value="7">August</option>
+        <option value="8">September</option>
+        <option value="9">October</option>
+        <option value="10">November</option>
+        <option value="11">December</option>
+      </select>
+
+      <label for="day">Day:</label>
+      <select name="day" id="day"></select>
+
+      <label for="picture">Upload a Picture:</label>
+      <input type="file" name="picture" accept="image/*" />
+
+      <button type="submit">Save</button>
+    </form>
+  </div>
+
+<script>
+const yearSelect = document.getElementById('year');
+const monthSelect = document.getElementById('month');
+const daySelect = document.getElementById('day');
+
+// Populate Year dropdown (start at 2025 up to 1900)
+for (let y = 2025; y >= 1900; y--) {
+  const option = document.createElement('option');
+  option.value = y;
+  option.textContent = y;
+  yearSelect.appendChild(option);
+}
+
+function updateDays() {
+  const month = parseInt(monthSelect.value);
+  const year = parseInt(yearSelect.value);
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+  daySelect.innerHTML = '';
+  for (let d = 1; d <= daysInMonth; d++) {
+    const option = document.createElement('option');
+    option.value = d;
+    option.textContent = d;
+    daySelect.appendChild(option);
+  }
+}
+
+monthSelect.addEventListener('change', updateDays);
+yearSelect.addEventListener('change', updateDays);
+updateDays();
+
+// Handle Save button
+document.querySelector("form").addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  const year = yearSelect.value;
+  const month = monthSelect.value;
+  const day = daySelect.value;
+
+  // Create birthday object
+  const birthday = {
+    year,
+    month,
+    day
+  };
+
+  // Get existing birthdays
+  let birthdays = JSON.parse(localStorage.getItem("birthdays")) || [];
+  birthdays.push(birthday);
+
+  // Save back to localStorage
+  localStorage.setItem("birthdays", JSON.stringify(birthdays));
+
+  // Go back to home page
+  window.location.href = "home.html";
+});
+</script>
+</body>
+</html>

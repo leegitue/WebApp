@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Birthday Events</title>
+  <link rel="stylesheet" href="home.css">
+</head>
+<body>
+
+  <!-- Hamburger Icon -->
+  <div class="hamburger" onclick="toggleMenu()">
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+
+  <!-- Side Menu -->
+  <div class="side-menu" id="sideMenu">
+    <a href="home.html">Home</a>
+    <a href="birthday.html">Add Birthday</a>
+    <a href="profile.html">Profile</a>
+  </div>
+
+<div class="container">
+  <h1>BIRTHDAY EVENTS</h1>
+  <div id="events"></div>
+  <p class="instruction">Add birthdate by clicking the add birthday button at the bottom</p>
+  <a href="birthday.html" class="add-btn">Add birthday</a>
+</div>
+
+<script>
+function toggleMenu() {
+  document.getElementById("sideMenu").classList.toggle("active");
+}
+
+const eventsDiv = document.getElementById("events");
+let birthdays = JSON.parse(localStorage.getItem("birthdays")) || [];
+
+function renderBirthdays() {
+  eventsDiv.innerHTML = "";
+
+  if (birthdays.length === 0) {
+    eventsDiv.innerHTML = '<p class="no-event"><strong>No Created Event</strong></p>';
+    return;
+  }
+
+  const months = [
+    "January","February","March","April","May","June",
+    "July","August","September","October","November","December"
+  ];
+
+  birthdays.forEach((b, index) => {
+    const wrapper = document.createElement("div");
+    wrapper.classList.add("event-item");
+
+    const dateText = document.createElement("span");
+    dateText.textContent = `${months[parseInt(b.month)]} ${b.day}, ${b.year}`;
+
+    const deleteBtn = document.createElement("button");
+    deleteBtn.textContent = "Delete";
+    deleteBtn.style.marginLeft = "10px";
+    deleteBtn.style.backgroundColor = "#ff4d4d";
+    deleteBtn.style.color = "white";
+    deleteBtn.style.border = "none";
+    deleteBtn.style.padding = "5px 10px";
+    deleteBtn.style.cursor = "pointer";
+    deleteBtn.style.borderRadius = "5px";
+
+    deleteBtn.onclick = function() {
+      birthdays.splice(index, 1);
+      localStorage.setItem("birthdays", JSON.stringify(birthdays));
+      renderBirthdays();
+    };
+
+    wrapper.appendChild(dateText);
+    wrapper.appendChild(deleteBtn);
+    eventsDiv.appendChild(wrapper);
+  });
+}
+
+renderBirthdays();
+</script>
+</body>
+</html>

@@ -1,0 +1,91 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: white;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.container {
+  text-align: center;
+}
+
+h1 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 30px;
+}
+
+.no-event {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.instruction {
+  font-size: 14px;
+  color: gray;
+  margin-bottom: 20px;
+}
+
+.add-btn {
+  display: inline-block;
+  background-color: black;
+  color: white;
+  text-decoration: none;
+  padding: 8px 14px;
+  border-radius: 3px;
+  font-size: 14px;
+}
+
+.add-btn:hover {
+  opacity: 0.8;
+}
+
+/* Hamburger menu */
+.hamburger {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  cursor: pointer;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.hamburger div {
+  width: 25px;
+  height: 3px;
+  background-color: #333;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+/* Side menu */
+.side-menu {
+  position: fixed;
+  top: 0;
+  left: -350px;
+  width: 150px;
+  height: 100%;
+  background: #0c0c0c;
+  box-shadow: 2px 0 5px rgba(0,0,0,0.2);
+  padding: 40px 15px 15px 15px; /* top right bottom left */
+  transition: left 0.3s ease;
+}
+
+.side-menu.active {
+  left: 0;
+}
+
+.side-menu a {
+  display: block;
+  margin: 17px 0;
+  text-decoration: none;
+  color: #fdfdfd;
+  font-weight: bold;
+}
